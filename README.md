@@ -19,3 +19,5 @@ Mahdollisia lisätoimintoja (jos aikaa)
 * Laskun lähettäminen ilmoittautuneille
 
 ## Tietokantakaavio
+
+![Tietokantakaavio](https://github.com/kafenoir/sporttireissu/blob/master/documentation/images/sporttireissu_tkk.png)
