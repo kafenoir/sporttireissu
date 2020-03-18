@@ -1,0 +1,20 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Sporttireissu</title>
+    </head>
+    
+    <body>
+      <ul>
+	<li><a href="{{ url_for('trips_index') }}">Show all trips</a></li>
+	<li><a href="{{ url_for('trips_form') }}">Add a trip</a></li>
+      </ul>
+      
+      {% block body %}
+      <p>
+	Content.
+      </p>
+      {% endblock %}
+    </body>
+  </html>
