@@ -21,3 +21,7 @@ Mahdollisia lisätoimintoja (jos aikaa)
 ## Tietokantakaavio
 
 ![Tietokantakaavio](https://github.com/kafenoir/sporttireissu/blob/master/documentation/images/sporttireissu_tkk.png)
+
+## Heroku
+
+https://sporttireissu.herokuapp.com/
