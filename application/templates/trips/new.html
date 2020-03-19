@@ -2,7 +2,22 @@
 
 {% block body %}
 <form method="POST" action="{{ url_for('trips_create') }}">
-  <input type="text" name="name"/>
+  <label for="name">Matkan nimi</label>
+  <input type="text" name="name"/><br>
+  <label for="destination">Kohde</label>
+  <input type="text" name="destination"/><br>
+  <label for="start_date">Lähtöpäivä (PPKKVVVV) </label>
+  <input type="text" name="start_date"/><br>
+  <label for="end_date">Paluupäivä (PPKKVVVV) </label>
+  <input type="text" name="end_date"/><br>
+  <label for="price">Hinta (€, kokonaisluku)</label>
+  <input type="text" name="price"/><br>
+  <label for="description">Kuvaus</label>
+  <input type="text" name="description"/><br>
+  <label for="registration_dl">Viimeinen ilmoittautumispäivä (PPKKVVVV) </label>
+  <input type="text" name="registration_dl"/><br>
+  <label for="max_participants">Max osallistujia</label>
+  <input type ="text" name="max_participants"/><br>
   <input type="submit" value="Create a new trip"/>
 </form>
 {% endblock %}

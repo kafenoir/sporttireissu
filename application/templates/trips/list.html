@@ -3,11 +3,16 @@
 {% block body %}
   <table>
     <tr>
-      <th>Trip</th>
+      <th>Matkat</th>
     </tr>
     {% for trip in trips %}
     <tr>
-      <td>{{ trip.name }}</td>
+      <td><b>{{ trip.name }}</b> Kohde: {{ trip.destination }}, Hinta: {{ trip.price }}, Alkamispäivä: {{trip.start_date}}, Max osallistujat: {{ trip.max_participants }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('trips_editor', trip_id=trip.id) }}">
+          <input type="submit" value="Edit"/>
+        </form>
+      </td>
     </tr>
     {% endfor %}
   </table>
