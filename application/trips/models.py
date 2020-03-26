@@ -11,6 +11,8 @@ class Trip(db.Model):
     registration_dl = db.Column(db.DateTime, default=db.func.current_date())
     max_participants = db.Column(db.Integer, nullable=False)
 
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+
     def __init__(self, name):
         self.name = name
         self.destination = "Ei määritelty"
