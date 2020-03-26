@@ -166,10 +166,8 @@
         </tr>
       </table>
     </form>
-</table>
-
-<form method="POST" action="{{ url_for('trips_delete', trip_id=trip.id) }}">
-    <input type="submit" value="Poista"/>
-</form>
-      
+    <form method="POST" action="{{ url_for('trips_delete', trip_id=trip.id) }}">
+        <input type="submit" value="Poista"/>
+    </form>
+</table>   
 {% endblock %}

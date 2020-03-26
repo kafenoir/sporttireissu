@@ -46,7 +46,7 @@ def trips_create():
 
     return redirect(url_for("trips_index"))
 
-@app.route("/trips/<trip_id>/", methods=["POST"])
+@app.route("/trips/edit/<trip_id>", methods=["POST"])
 @login_required
 def trips_edit(trip_id):
 
@@ -67,15 +67,16 @@ def trips_edit(trip_id):
 
     return redirect(url_for("trips_index"))
 
-@app.route("/trips/<trip_id>/", methods=["POST"])
+@app.route("/trips/delete/<trip_id>", methods=["POST"])
 @login_required
 def trips_delete(trip_id):
 
-    Trip.query.filter_by(id=trip_id).delete()
+    Trip.query.filter(Trip.id == trip_id).delete()
 
     db.session().commit()
 
     return redirect(url_for("trips_index"))
+
 
 
 
