@@ -1,4 +1,5 @@
 from application import db
+from datetime import datetime
 
 class Trip(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,4 +20,13 @@ class Trip(db.Model):
         self.price = 0
         self.description = "Tervetuloa matkalleni!"
         self.max_participants = 10
+
+    def convertStartDate(self):
+        return self.start_date.strftime("%Y-%m-%d")
+
+    def convertEndDate(self):
+        return self.end_date.strftime("%Y-%m-%d")
+
+    def convertRegDL(self):
+        return self.registration_dl.strftime("%Y-%m-%d")
         

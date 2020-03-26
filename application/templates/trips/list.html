@@ -7,10 +7,10 @@
     </tr>
     {% for trip in trips %}
     <tr>
-      <td><b>{{ trip.name }}</b> Kohde: {{ trip.destination }}, Hinta: {{ trip.price }}, Alkamispäivä: {{trip.start_date}}, Max osallistujat: {{ trip.max_participants }}</td>
+      <td><b>{{ trip.name }}</b> Kohde: {{ trip.destination }}, Lähtöpäivä: {{trip.start_date}}, Paluupäivä: {{trip.end_date}}, Hinta: {{ trip.price }}, Kuvaus: {{trip.description}}, Viimeinen ilmoittautumispäivä: {{trip.registration_dl}},  Max osallistujat: {{ trip.max_participants }}</td>
       <td>
         <form method="POST" action="{{ url_for('trips_editor', trip_id=trip.id) }}">
-          <input type="submit" value="Edit"/>
+          <input type="submit" value="Muuta"/>
         </form>
       </td>
     </tr>

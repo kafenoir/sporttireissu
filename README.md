@@ -25,3 +25,8 @@ Mahdollisia lisätoimintoja (jos aikaa)
 ## Heroku
 
 https://sporttireissu.herokuapp.com/
+
+###Testitunnukset
+
+käyttäjänimi: teppot
+salasana: portableram

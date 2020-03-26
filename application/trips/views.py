@@ -20,7 +20,7 @@ def trips_form():
 @app.route("/trips/<trip_id>", methods=["POST"])
 @login_required
 def trips_editor(trip_id):
-    return render_template("trips/edit.html", trip = Trip.query.get(trip_id))
+    return render_template("trips/edit.html", form = TripForm(), trip = Trip.query.get(trip_id))
 
 
 @app.route("/trips/", methods=["POST"])
@@ -50,16 +50,33 @@ def trips_create():
 @login_required
 def trips_edit(trip_id):
 
+    form = TripForm(request.form)
+
+    if not form.validate():
+        return render_template("trips/edit.html", form = form, trip = Trip.query.get(trip_id))
+
     t = Trip.query.get(trip_id)
-    t.name = request.form.get("name")
-    t.price = request.form.get("price")
-    t.destination = request.form.get("destination")
-    t.start_date = datetime.datetime.strptime(request.form.get("start_date"), "%Y-%m-%d").date()
-    t.end_date = datetime.datetime.strptime(request.form.get("end_date"), "%Y-%m-%d").date()
-    t.description = request.form.get("description")
-    t.registration_dl = datetime.datetime.strptime(request.form.get("registration_dl"), "%Y-%m-%d").date()
-    t.max_participants = request.form.get("max_participants")
+    t.price = form.price.data
+    t.destination = form.destination.data
+    t.start_date = form.start_date.data
+    t.end_date = form.end_date.data
+    t.registration_dl = form.registration_dl.data
+    t.max_participants = form.max_participants.data
+
     db.session().commit()
 
     return redirect(url_for("trips_index"))
+
+@app.route("/trips/<trip_id>/", methods=["POST"])
+@login_required
+def trips_delete(trip_id):
+
+    Trip.query.filter_by(id=trip_id).delete()
+
+    db.session().commit()
+
+    return redirect(url_for("trips_index"))
+
+
+
 
