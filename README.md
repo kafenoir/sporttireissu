@@ -18,12 +18,6 @@ Mahdollisia lisätoimintoja (jos aikaa)
 * Osallistumiskutsun lähettäminen tietyn taitotason käyttäjille
 * Laskun lähettäminen ilmoittautuneille
 
-## Käyttäjätapaukset
-
-Pyöräilyvalmentaja haluaa järjestää viikonlopun kestävän pyöräilyreissun Porvooseen. Sporttireissu-tunnuksellaan hän voi helposti luoda matkan, joka näkyy kaikille palvelun käyttäjille. Ajankohdan lisäksi hän voi määrittää matkalla hinnan sekä maksimiosallistujamäärän. Hän voi myös määrittää, että reissu on tarkoitettu vain aloitteleville pyöräilijöille.
-
-Aloitteleva pyöräilijä etsii edullista viikonlopun kestävää pyöräilyreissua rennoissa merkeissä. Sporttireissu-tunnuksellaan hän voi hakea itselleen sopivaan ajankohtaan sijoittuvaa pyöräilyreissua, joka on nimenomaan aloittelijoille suunnattu. Haulleen hän voi määrittää myös hintahaitarin. Jos kyseisenlainen matka löytyy ja ilmoittautumiskiintiö ei ole täysi, hän voi ilmoittautua matkalle.
-
 ## Tietokantakaavio
 
 ![Tietokantakaavio](https://github.com/kafenoir/sporttireissu/blob/master/documentation/images/sporttireissu_tkk.png)
@@ -32,7 +26,7 @@ Aloitteleva pyöräilijä etsii edullista viikonlopun kestävää pyöräilyreis
 
 https://sporttireissu.herokuapp.com/
 
-### Testitunnukset
+###Testitunnukset
 
 käyttäjänimi: teppot
 salasana: portableram
