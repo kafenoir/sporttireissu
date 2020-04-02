@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Matkat</th>
+    </tr>
+    {% if trips is defined %}
+    {% for trip in trips %}
+    <tr>
+      <td>{{ trip.name }}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+  </table>
+{% endblock %}

@@ -20,6 +20,21 @@
     </tr>
     <tr>
       <td>
+        {{form.sport.label}}
+      </td>
+      <td>
+        {{form.sport}}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.name.errors %}
+          <li>{{error}}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
         {{form.destination.label}}
       </td>
       <td>
