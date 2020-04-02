@@ -5,6 +5,9 @@ from application import app, db
 from application.trips.models import Trip
 from application.trips.forms import TripForm
 
+from application.sports.models import Sport
+from application.sports.models import TripSport
+
 import datetime
 
 @app.route("/trips/", methods=["GET"])
@@ -28,9 +31,6 @@ def trips_editor(trip_id):
 def trips_create():
     form = TripForm(request.form)
 
-    if not form.validate():
-        return render_template("trips/new.html", form = form)
-
     t = Trip(form.name.data)
     t.price = form.price.data
     t.destination = form.destination.data
@@ -42,6 +42,12 @@ def trips_create():
     t.account_id = current_user.id
 
     db.session().add(t)
+    db.session().commit()
+
+    ts1 = TripSport(t.id)
+    ts1.sport_id = form.sport.data
+
+    db.session().add(ts1)
     db.session().commit()
 
     return redirect(url_for("trips_index"))
@@ -76,6 +82,13 @@ def trips_delete(trip_id):
     db.session().commit()
 
     return redirect(url_for("trips_index"))
+
+@app.route("/trips/sport/<sport_id>", methods=["GET"])
+def search_by_sport(sport_id):
+
+    return render_template("trips/search.html", trips=Trip.find_trips_with_sport(sport_id))
+
+
 
 
 
