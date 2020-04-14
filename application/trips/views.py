@@ -3,10 +3,9 @@ from flask_login import login_required, current_user
 
 from application import app, db
 from application.trips.models import Trip
-from application.trips.forms import TripForm
+from application.trips.forms import (TripForm)
 
 from application.sports.models import Sport
-from application.sports.models import TripSport
 
 import datetime
 
@@ -17,7 +16,9 @@ def trips_index():
 @app.route("/trips/new")
 @login_required
 def trips_form():
-    return render_template("trips/new.html", form = TripForm())
+    form = TripForm(request.form)
+    form.sports.choices = [(c.id, c.name) for c in Sport.query.all()]
+    return render_template("trips/new.html", form = form)
 
 
 @app.route("/trips/<trip_id>", methods=["POST"])
@@ -30,6 +31,10 @@ def trips_editor(trip_id):
 @login_required
 def trips_create():
     form = TripForm(request.form)
+    form.sports.choices = [(c.id, c.name) for c in Sport.query.all()]
+
+    if not form.validate():
+        return render_template("trips/new.html", form = form)
 
     t = Trip(form.name.data)
     t.price = form.price.data
@@ -41,13 +46,14 @@ def trips_create():
     t.max_participants = form.max_participants.data
     t.account_id = current_user.id
 
+    sport_records = Sport.query.all()
+    accepted = []
+    for sport in sport_records:
+        if sport.id in form.sports.data:
+            accepted.append(sport)
+    t.sports = accepted
+
     db.session().add(t)
-    db.session().commit()
-
-    ts1 = TripSport(t.id)
-    ts1.sport_id = form.sport.data
-
-    db.session().add(ts1)
     db.session().commit()
 
     return redirect(url_for("trips_index"))

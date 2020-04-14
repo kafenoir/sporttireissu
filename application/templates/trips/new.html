@@ -20,21 +20,6 @@
     </tr>
     <tr>
       <td>
-        {{form.sport.label}}
-      </td>
-      <td>
-        {{form.sport}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.name.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
         {{form.destination.label}}
       </td>
       <td>
@@ -140,9 +125,21 @@
     </tr>
     <tr>
       <td colspan="3">
-        <input type="submit" value="Create a new trip"/>
+        <input type="submit" value="Create a new trip" />
       </td>
     </tr>
   </table>
+  <legend class="border-bottom mb-4">Urheilulajit</legend>
+  {% for choice in form.sports %}
+  <div class="form-check">
+    {{ choice(class="form-check-input") }}
+    {{ choice.label(class="form-check-label") }}
+  </div>
+  {% endfor %}
+  <div class="invalid-feedback">
+    {% for error in form.sports.errors %}
+    <span>{{ error }}</span>
+    {% endfor %}
+  </div>
 </form>
 {% endblock %}

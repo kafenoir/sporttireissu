@@ -4,6 +4,11 @@ from datetime import datetime
 
 from sqlalchemy.sql import text
 
+trip_sport = db.Table('trip_sport', 
+                db.Column('trip_id', db.Integer, db.ForeignKey('trip.id'), primary_key=True),
+                db.Column('sport_id', db.Integer, db.ForeignKey('sport.id'), primary_key=True)
+                )
+
 class Trip(Base):
 
     name = db.Column(db.String(32), nullable=False)
@@ -17,7 +22,8 @@ class Trip(Base):
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
-    trip_sport = db.relationship("TripSport", backref='trip', lazy=True)
+    sports = db.relationship('Sport', secondary=trip_sport, lazy='subquery', 
+                                backref=db.backref('trip_sports', lazy=True))
 
     def __init__(self, name):
         self.name = name
