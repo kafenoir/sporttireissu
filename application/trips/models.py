@@ -9,6 +9,11 @@ trip_sport = db.Table('trip_sport',
                 db.Column('sport_id', db.Integer, db.ForeignKey('sport.id'), primary_key=True)
                 )
 
+trip_level = db.Table('trip_level', 
+                db.Column('trip_id', db.Integer, db.ForeignKey('trip.id'), primary_key=True),
+                db.Column('level_id', db.Integer, db.ForeignKey('level.id'), primary_key=True)
+                )
+
 class Trip(Base):
 
     name = db.Column(db.String(32), nullable=False)
@@ -24,6 +29,9 @@ class Trip(Base):
 
     sports = db.relationship('Sport', secondary=trip_sport, lazy='subquery', 
                                 backref=db.backref('trip_sports', lazy=True))
+
+    levels = db.relationship('Level', secondary=trip_level, lazy='subquery', 
+                                backref=db.backref('trip_levels', lazy=True))
 
     def __init__(self, name):
         self.name = name

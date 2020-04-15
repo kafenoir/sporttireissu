@@ -1,145 +1,62 @@
 {% extends "layout.html" %}
+{% from "macros.html" import render_field, render_checkboxfield with context %}
 
 {% block body %}
-<form method="POST" action="{{ url_for('trips_create') }}">
-  <table>
-    <tr>
-      <td>
-        {{form.name.label}}
-      </td>
-      <td>
-        {{form.name}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.name.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{form.destination.label}}
-      </td>
-      <td>
-        {{form.destination}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.destination.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{form.start_date.label}}
-      </td>
-      <td>
-        {{form.start_date}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.start_date.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{form.end_date.label}}
-      </td>
-      <td>
-        {{form.end_date}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.end_date.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{form.price.label}}
-      </td>
-      <td>
-        {{form.price}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.price.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{form.description.label}}
-      </td>
-      <td>
-        {{form.description}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.description.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{form.registration_dl.label}}
-      </td>
-      <td>
-        {{form.registration_dl}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.registration_dl.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{form.max_participants.label}}
-      </td>
-      <td>
-        {{form.max_participants}}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.max_participants.errors %}
-          <li>{{error}}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3">
-        <input type="submit" value="Create a new trip" />
-      </td>
-    </tr>
-  </table>
-  <legend class="border-bottom mb-4">Urheilulajit</legend>
-  {% for choice in form.sports %}
-  <div class="form-check">
-    {{ choice(class="form-check-input") }}
-    {{ choice.label(class="form-check-label") }}
+<div class="container bg-dark text-light m-3 p-3" role="main">
+  <div class="row">
+    <div class="col">
+      <form class="needs-validation" method="POST" action="{{ url_for('trips_create') }}" novalidate>
+        <fieldset>
+          <legend class="border-bottom mb-2">Reissun perustiedot</legend>
+          <div class="row">
+            <div class="col-lg-3">
+              {{ render_field(form.name, placeholder=form.name.label.text) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3">
+              {{ render_field(form.destination, placeholder=form.destination.label.text) }}
+            </div>
+            <div class="col-lg-2">
+              {{ render_field(form.price, placeholder="Kokonaisluku") }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3">
+              {{ render_field(form.start_date) }}
+            </div>
+            <div class="col-lg-3">
+              {{ render_field(form.end_date) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{ render_field(form.description, placeholder=form.description.label.text) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3">
+              {{ render_field(form.registration_dl) }}
+            </div>
+            <div class="col-lg-3">
+              {{ render_field(form.max_participants) }}
+            </div>
+          </div>
+          <div class="col">
+            <legend class="border-bottom mb-2">Reissulla harrastettavat lajit (valitse yksi tai useampi)</legend>
+            {{ render_checkboxfield(form.sports) }}
+          </div>
+          <div class="col">
+            <legend class="border-bottom mb-2">Reissu sopii taitotasoille (valitse yksi tai useampi)</legend>
+            {{ render_checkboxfield(form.levels) }}
+          </div>
+          <div class="col">
+            <legend class="border-bottom mb-2"></legend>
+            <button class="btn btn-primary" type="submit">Luo matka</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
   </div>
-  {% endfor %}
-  <div class="invalid-feedback">
-    {% for error in form.sports.errors %}
-    <span>{{ error }}</span>
-    {% endfor %}
-  </div>
-</form>
+</div>
 {% endblock %}

@@ -1,0 +1,29 @@
+{% macro render_field(field) %}
+<div class="form-group">
+  <label for="{{ field.name }}" class="col control-label">{{ field.label.text }}</label>
+  <div class="col">
+    {% if field.errors %}
+    {{ field(class="form-control is-invalid", **kwargs)|safe }}
+    <div class="invalid-feedback">
+      {% for error in field.errors %}
+      <span>{{error}}</span>
+      {% endfor %}
+    </div>
+    {% else %}
+    {{ field(class='form-control', **kwargs)|safe }}
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro render_checkboxfield(field) %}
+{% for choice in field %}
+<div class="form-check">
+  {{ choice(class="form-check-input") }}
+  {{ choice.label(class="form-check-label") }}
+</div>
+{% endfor %}
+{% for error in field.errors %}
+<span class="text-danger">{{ error }}</span>
+{% endfor %}
+{% endmacro %}

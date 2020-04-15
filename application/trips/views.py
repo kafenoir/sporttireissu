@@ -7,6 +7,8 @@ from application.trips.forms import (TripForm)
 
 from application.sports.models import Sport
 
+from application.levels.models import Level
+
 import datetime
 
 @app.route("/trips/", methods=["GET"])
@@ -18,6 +20,7 @@ def trips_index():
 def trips_form():
     form = TripForm(request.form)
     form.sports.choices = [(c.id, c.name) for c in Sport.query.all()]
+    form.levels.choices = [(c.id, c.name) for c in Level.query.all()]
     return render_template("trips/new.html", form = form)
 
 
@@ -32,6 +35,7 @@ def trips_editor(trip_id):
 def trips_create():
     form = TripForm(request.form)
     form.sports.choices = [(c.id, c.name) for c in Sport.query.all()]
+    form.levels.choices = [(c.id, c.name) for c in Level.query.all()]
 
     if not form.validate():
         return render_template("trips/new.html", form = form)
@@ -52,6 +56,13 @@ def trips_create():
         if sport.id in form.sports.data:
             accepted.append(sport)
     t.sports = accepted
+
+    level_records = Level.query.all()
+    accepted = []
+    for level in level_records:
+        if level.id in form.levels.data:
+            accepted.append(level)
+    t.levels = accepted
 
     db.session().add(t)
     db.session().commit()
