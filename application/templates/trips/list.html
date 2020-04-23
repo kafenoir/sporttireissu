@@ -1,17 +1,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <table>
-    <tr>
-      <th>Matkat</th>
-    </tr>
-    {% for trip in trips %}
-    <tr>
-      <td><b>{{ trip.name }}</b> Kohde: {{ trip.destination }}, Lähtöpäivä: {{trip.start_date}}, Paluupäivä: {{trip.end_date}}, Hinta: {{ trip.price }}, Kuvaus: {{trip.description}}, Viimeinen ilmoittautumispäivä: {{trip.registration_dl}},  Max osallistujat: {{ trip.max_participants }}</td>
-      <td>
-        <a class="btn btn-primary" href="{{ url_for('trips_edit', trip_id=trip.id) }}">Muokkaa</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+<legend>Matkat</legend>
+
+<div class="list-group">
+  {% for trip in trips %}
+  <a href="{{ url_for('trips_display', trip_id=trip.id) }}" class="list-group-item list-group-item-action"><b>{{trip.name}}</b> Kohde: {{trip.destination}} Hinta: {{trip.price}} Lähtöpäivä: {{trip_start_date}} Paluupäivä: {{trip.end_date}}</a>
+  {% endfor %}
+</div>
 {% endblock %}

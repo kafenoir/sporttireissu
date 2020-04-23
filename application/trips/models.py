@@ -4,15 +4,11 @@ from datetime import datetime
 
 from sqlalchemy.sql import text
 
-trip_sport = db.Table('trip_sport', 
-                db.Column('trip_id', db.Integer, db.ForeignKey('trip.id'), primary_key=True),
-                db.Column('sport_id', db.Integer, db.ForeignKey('sport.id'), primary_key=True)
-                )
+trip_sport = db.Table('trip_sport', db.Column('trip_id', db.Integer, db.ForeignKey('trip.id'), primary_key=True), db.Column('sport_id', db.Integer, db.ForeignKey('sport.id'), primary_key=True))
 
-trip_level = db.Table('trip_level', 
-                db.Column('trip_id', db.Integer, db.ForeignKey('trip.id'), primary_key=True),
-                db.Column('level_id', db.Integer, db.ForeignKey('level.id'), primary_key=True)
-                )
+trip_level = db.Table('trip_level', db.Column('trip_id', db.Integer, db.ForeignKey('trip.id'), primary_key=True), db.Column('level_id', db.Integer, db.ForeignKey('level.id'), primary_key=True))
+
+trip_user = db.Table('trip_user', db.Column('trip_id', db.Integer, db.ForeignKey('trip.id'), primary_key=True), db.Column('account_id', db.Integer, db.ForeignKey('account.id'), primary_key=True))
 
 class Trip(Base):
 
@@ -27,11 +23,11 @@ class Trip(Base):
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
-    sports = db.relationship('Sport', secondary=trip_sport, lazy='subquery', 
-                                backref=db.backref('trip_sports', lazy=True))
+    sports = db.relationship('Sport', secondary=trip_sport, lazy='subquery', backref=db.backref('trip_sports', lazy=True))
 
-    levels = db.relationship('Level', secondary=trip_level, lazy='subquery', 
-                                backref=db.backref('trip_levels', lazy=True))
+    levels = db.relationship('Level', secondary=trip_level, lazy='subquery', backref=db.backref('trip_levels', lazy=True))
+
+    users = db.relationship('User', secondary=trip_user, lazy='subquery', backref=db.backref('trip_users', lazy=True))
 
     def __init__(self, name):
         self.name = name

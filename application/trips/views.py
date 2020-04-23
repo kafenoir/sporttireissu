@@ -13,18 +13,9 @@ import datetime
 
 
 @app.route("/trips/", methods=["GET"])
-def trips_index():
-    return render_template("trips/list.html", trips=Trip.query.all())
-
-
-@app.route("/trips/<trip_id>", methods=["POST"])
 @login_required
-def trips_editor(trip_id):
-    form = TripForm(request.form)
-    trip = Trip.query.get(trip_id)
-    form.sports.choices = [(c.id, c.name) for c in Sport.query.all()]
-    form.levels.choices = [(c.id, c.name) for c in Level.query.all()]
-    return render_template("trips/edit.html", form=form, trip=trip)
+def trips_index():
+    return render_template("trips/list.html", trips=Trip.query.all(), user_id=current_user.id)
 
 
 @app.route("/trips/new", methods=["GET", "POST"])
@@ -75,14 +66,20 @@ def trips_create():
 @login_required
 def trips_edit(trip_id):
 
-    form = TripForm(request.form)
     t = Trip.query.get(trip_id)
+
+    if t.account_id != current_user.id:
+        return redirect(url_for("trips_index"))
+
+    form = TripForm(request.form)
     form.sports.choices = [(c.id, c.name) for c in Sport.query.all()]
     form.levels.choices = [(c.id, c.name) for c in Level.query.all()]
     all_sports = Sport.query.all()
-    previous_sports = Sport.query.join(trip_sport).join(Trip).filter((trip_sport.c.sport_id == Sport.id) & (trip_sport.c.trip_id == trip_id)).all()
+    previous_sports = Sport.query.join(trip_sport).join(Trip).filter(
+        (trip_sport.c.sport_id == Sport.id) & (trip_sport.c.trip_id == trip_id)).all()
     all_levels = Level.query.all()
-    previous_levels = Level.query.join(trip_level).join(Trip).filter((trip_level.c.level_id == Level.id) & (trip_level.c.trip_id == trip_id)).all()
+    previous_levels = Level.query.join(trip_level).join(Trip).filter(
+        (trip_level.c.level_id == Level.id) & (trip_level.c.trip_id == trip_id)).all()
 
     if request.method == "GET":
         return render_template("trips/edit.html", form=form, trip=t, sports=all_sports, levels=all_levels, previous_sports=previous_sports, previous_levels=previous_levels)
@@ -104,18 +101,17 @@ def trips_edit(trip_id):
             t.sports.append(sport)
         elif sport.id not in form.sports.data and sport in previous_sports:
             t.sports.remove(sport)
-            
+
     for level in all_levels:
         if level.id in form.levels.data and level not in previous_levels:
             t.levels.append(level)
         elif level.id not in form.levels.data and level in previous_levels:
             t.levels.remove(level)
-    
+
     db.session().add(t)
     db.session().commit()
 
     return redirect(url_for("trips_index"))
-
 
 @app.route("/trips/delete/<trip_id>", methods=["POST"])
 @login_required
@@ -132,3 +128,34 @@ def trips_delete(trip_id):
 def search_by_sport(sport_id):
 
     return render_template("trips/search.html", trips=Trip.find_trips_with_sport(sport_id))
+
+@app.route("/trips/<trip_id>", methods=["GET"])
+@login_required
+def trips_display(trip_id):
+    return render_template("trips/display.html", trip=Trip.query.get(trip_id), user_id=current_user.id)
+
+@app.route("/trips/register/<trip_id>", methods=["POST"])
+@login_required
+def trips_register(trip_id):
+
+    trip = Trip.query.get(trip_id)
+    trip.users.append(current_user)
+
+    db.session().add(trip)
+    db.session().commit()
+
+    return render_template("trips/display.html", trip=trip, user_id=current_user.id)
+
+@app.route("/trips/cancel/<trip_id>", methods=["POST"])
+@login_required
+def trips_cancel_registration(trip_id):
+
+    trip = Trip.query.get(trip_id)
+    trip.users.remove(current_user)
+
+    db.session().add(trip)
+    db.session().commit()
+
+    return render_template("trips/display.html", trip=trip, user_id=current_user.id)
+
+

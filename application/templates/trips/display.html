@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container bg-dark text-light m-3 p-3 rounded" role="main">
+    <div class="row">
+        <div class="col">
+            <fieldset>
+                <legend class="border-bottom mb-2">{{ trip.name }}</legend>
+                <div class="row mb-2">
+                    <div class="col-lg-3">
+                        Kohde: {{ trip.destination }}
+                    </div>
+                    <div class="col-lg-2">
+                        Hinta: {{ trip.price}} €
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3">
+                        Lähtöpäivä: {{ trip.start_date }}
+                    </div>
+                    <div class="col-lg-3">
+                        Paluupäivä: {{ trip.end_date }}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        Matkan kuvaus: {{ trip.description }}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3">
+                        Viimeinen ilmoittautumispäivä: {{ trip.registration_dl }}
+                    </div>
+                    <div class="col-lg-3">
+                        Osallistujia enintään: {{ trip.max_participants }}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <legend class="border-bottom mb-2">Reissulla harrastettavat lajit</legend>
+                        {% for s in trip.sports %}
+                        {{s.name}}<br>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <legend class="border-bottom mb-2">Reissu sopii taitotasoille</legend>
+                        {% for l in trip.levels %}
+                        {{l.name}}<br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </fieldset>
+
+            {% if current_user in trip.users %} 
+            <form class="needs-validation" method="POST" action="{{ url_for('trips_cancel_registration', trip_id=trip.id) }}"
+                novalidate>
+                <div class="col">
+                    <legend class="border-bottom mb-2"></legend>
+                    <button class="btn btn-danger" type="submit">Peru ilmoittautuminen</button>
+                </div>
+            </form>
+
+            {% elif trip.account_id != user_id %}
+            <form class="needs-validation" method="POST" action="{{ url_for('trips_register', trip_id=trip.id) }}"
+                novalidate>
+                <div class="col">
+                    <legend class="border-bottom mb-2"></legend>
+                    <button class="btn btn-primary" type="submit">Ilmoittaudu matkalle</button>
+                </div>
+            </form>
+            {% else %}
+            <a class="btn btn-warning" href="{{ url_for('trips_edit', trip_id=trip.id) }}">Muokkaa</a>
+        
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
