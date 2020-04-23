@@ -27,3 +27,21 @@
 <span class="text-danger">{{ error }}</span>
 {% endfor %}
 {% endmacro %}
+
+{% macro render_prechecked_checkboxfield(field, data1, data2) %}
+{% for choice in field %}
+<div class="form-check">
+  {% set s = data1[loop.index-1] %}
+  {% if s in data2 %}
+  {{ choice(type='checkbox', checked=True, class='form-check-input')|safe }}
+  {% else %}
+  {{ choice(class="form-check-input") }}
+  {% endif %}
+  {{ choice.label(class="form-check-label") }}
+  
+</div>
+{% endfor %}
+{% for error in field.errors %}
+<span class="text-danger">{{ error }}</span>
+{% endfor %}
+{% endmacro %}

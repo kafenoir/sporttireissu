@@ -19,6 +19,7 @@ from application.trips import models
 from application.trips import views
 
 from application.sports import models
+from application.levels import models
 
 from application.auth import models
 from application.auth import views

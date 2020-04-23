@@ -2,7 +2,7 @@
 {% from "macros.html" import render_field, render_checkboxfield with context %}
 
 {% block body %}
-<div class="container bg-dark text-light m-3 p-3" role="main">
+<div class="container bg-dark text-light m-3 p-3 rounded" role="main">
   <div class="row">
     <div class="col">
       <form class="needs-validation" method="POST" action="{{ url_for('trips_create') }}" novalidate>

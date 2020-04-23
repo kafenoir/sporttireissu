@@ -1,173 +1,69 @@
 {% extends "layout.html" %}
+{% from "macros.html" import render_field, render_checkboxfield, render_prechecked_checkboxfield with context %}
 
 {% block body %}
+<div class="container bg-dark text-light m-3 p-3 rounded" role="main">
+  <legend>{{ trip.name }}</legend>
+  <div class="row">
+    <div class="col">
+      <form class="editform" method="POST" action="{{ url_for('trips_edit', trip_id=trip.id) }}" novalidate>
+        <fieldset>
+          <legend class="border-bottom mb-2">Reissun perustiedot</legend>
+          <div class="row">
+            <div class="col-lg-3">
+              {{ render_field(form.name, value=trip.name) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3">
+              {{ render_field(form.destination, value=trip.destination) }}
+            </div>
+            <div class="col-lg-2">
+              {{ render_field(form.price, value=trip.price) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3">
+              {{ render_field(form.start_date, value=trip.convertStartDate()) }}
+            </div>
+            <div class="col-lg-3">
+              {{ render_field(form.end_date, value=trip.convertEndDate()) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{ render_field(form.description, value=trip.description) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3">
+              {{ render_field(form.registration_dl, value=trip.convertRegDL()) }}
+            </div>
+            <div class="col-lg-3">
+              {{ render_field(form.max_participants, value=trip.max_participants) }}
+            </div>
+          </div>
+          <div class="col">
+            <legend class="border-bottom mb-2">Reissulla harrastettavat lajit (valitse yksi tai useampi)</legend>
+            {{ render_prechecked_checkboxfield(form.sports, sports, previous_sports) }}
 
-<b>{{ trip.name}}</b><br>
-<table>
-<form method="POST" action="{{ url_for('trips_edit', trip_id=trip.id) }}">
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                Arvo
-            </td>
-            <td>
-                Uusi arvo
-            </td>
-        </tr>
-        <tr>
-          <td>
-            {{form.name.label}}
-          </td>
-          <td>
-            {{trip.name}}
-          </td>
-          <td>
-            {{form.name}}
-          </td>
-          <td>
-            <ul>
-              {% for error in form.name.errors %}
-              <li>{{error}}</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{form.destination.label}}
-          </td>
-          <td>
-            {{trip.destination}}
-          </td>
-          <td>
-            {{form.destination}}
-          </td>
-          <td>
-            <ul>
-              {% for error in form.destination.errors %}
-              <li>{{error}}</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{form.start_date.label}}
-          </td>
-          <td>
-            {{trip.convertStartDate()}}
-          </td>
-          <td>
-            {{form.start_date}}
-          </td>
-          <td>
-            <ul>
-              {% for error in form.start_date.errors %}
-              <li>{{error}}</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{form.end_date.label}}
-          </td>
-          <td>
-            {{trip.convertEndDate()}}
-          </td>
-          <td>
-            {{form.end_date}}
-          </td>
-          <td>
-            <ul>
-              {% for error in form.end_date.errors %}
-              <li>{{error}}</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{form.price.label}}
-          </td>
-          <td>
-            {{trip.price}}
-          </td>
-          <td>
-            {{form.price}}
-          </td>
-          <td>
-            <ul>
-              {% for error in form.price.errors %}
-              <li>{{error}}</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{form.description.label}}
-          </td>
-          <td>
-            {{trip.description}}
-          </td>
-          <td>
-            {{form.description}}
-          </td>
-          <td>
-            <ul>
-              {% for error in form.description.errors %}
-              <li>{{error}}</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{form.registration_dl.label}}
-          </td>
-          <td>
-            {{trip.convertRegDL()}}
-          </td>
-          <td>
-            {{form.registration_dl}}
-          </td>
-          <td>
-            <ul>
-              {% for error in form.registration_dl.errors %}
-              <li>{{error}}</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{form.max_participants.label}}
-          </td>
-          <td>
-            {{trip.max_participants}}
-          </td>
-          <td>
-            {{form.max_participants}}
-          </td>
-          <td>
-            <ul>
-              {% for error in form.max_participants.errors %}
-              <li>{{error}}</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <input type="submit" value="Tallenna"/>
-          </td>
-        </tr>
-      </table>
-    </form>
-    <form method="POST" action="{{ url_for('trips_delete', trip_id=trip.id) }}">
-        <input type="submit" value="Poista"/>
-    </form>
-</table>   
+          </div>
+          <div class="col">
+            <legend class="border-bottom mb-2">Reissu sopii taitotasoille (valitse yksi tai useampi)</legend>
+            {{ render_prechecked_checkboxfield(form.levels, levels, previous_levels) }}
+          </div>
+          <div class="col">
+            <legend class="border-bottom mb-2"></legend>
+            <button class="btn btn-primary" type="submit">Vahvista muutokset</button>
+          </div>
+        </fieldset>
+      </form>
+      <form method="POST" action="{{ url_for('trips_delete', trip_id=trip.id) }}">
+        <div class="col mt-3">
+          <button class="btn btn-danger" type="submit">Poista matka</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
