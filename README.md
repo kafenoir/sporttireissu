@@ -6,11 +6,11 @@ Ohjelman avulla voi järjestää ja osallistua urheilumatkoille. Käyttäjä voi
 
 ## Toimintoja
 
-* Kirjautuminen
-* Julkinen käyttäjäprofiili
-* Matkan luominen ja peruutus
-* Matkatarjonnan katselu eri rajauksilla
-* Matkalle ilmoittautuminen (ja peruminen)
+* Kirjautuminen :heavy_check_mark:
+* Matkan luominen ja peruutus :heavy_check_mark:
+* Matkalle ilmoittautuminen (ja peruminen) :heavy_check_mark:
+* Matkatarjonnan katselu eri rajauksilla (WIP)
+* Julkinen käyttäjäprofiili 
 * Ilmoittautuneiden luettelo
 
 Mahdollisia lisätoimintoja (jos aikaa)
