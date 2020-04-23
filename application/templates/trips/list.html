@@ -5,7 +5,7 @@
 
 <div class="list-group">
   {% for trip in trips %}
-  <a href="{{ url_for('trips_display', trip_id=trip.id) }}" class="list-group-item list-group-item-action"><b>{{trip.name}}</b> Kohde: {{trip.destination}} Hinta: {{trip.price}} Lähtöpäivä: {{trip_start_date}} Paluupäivä: {{trip.end_date}}</a>
+  <a href="{{ url_for('trips_display', trip_id=trip.id) }}" class="list-group-item list-group-item-action"><b>{{trip.name}}</b> Kohde: {{trip.destination}} Hinta: {{trip.price}} Lähtöpäivä: {{trip.start_date}} Paluupäivä: {{trip.end_date}}</a>
   {% endfor %}
 </div>
 {% endblock %}
