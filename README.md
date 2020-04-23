@@ -30,7 +30,7 @@ Aloitteleva pyöräilijä etsii edullista viikonlopun kestävää pyöräilyreis
 
 ## Käyttöohjeet
 
-[Käyttöohjeet]https://github.com/kafenoir/sporttireissu/blob/master/documentation/manual.md
+[Käyttöohjeet](https://github.com/kafenoir/sporttireissu/blob/master/documentation/manual.md)
 
 ## Heroku
 
