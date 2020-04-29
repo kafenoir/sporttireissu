@@ -1,16 +1,32 @@
 {% extends "layout.html" %}
+{% from "macros.html" import render_field %}
 
 {% block body %}
-  <table>
-    <tr>
-      <th>Matkat</th>
-    </tr>
-    {% if trips is defined %}
-    {% for trip in trips %}
-    <tr>
-      <td>{{ trip.name }}</td>
-    </tr>
-    {% endfor %}
-    {% endif %}
-  </table>
+<div class="container bg-dark text-light m-3 p-3 rounded" role="main">
+    <legend>Etsi reissu</legend>
+    <div class="row">
+        <div class="col">
+            <form class="editform" method="POST" action="{{ url_for('trips_search') }}" novalidate>
+                <fieldset>
+                    <legend class="border-bottom mb-2">Korkein hinta</legend>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            {{ render_field(form.price) }}
+                        </div>
+                    </div>
+                    <legend class="border-bottom mb-2">Aikaisin lähtöpäivä</legend>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            {{ render_field(form.start_date) }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <legend class="border-bottom mb-2"></legend>
+                        <button class="btn btn-primary" type="submit">Hae</button>
+                      </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

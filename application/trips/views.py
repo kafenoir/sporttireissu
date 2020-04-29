@@ -7,7 +7,7 @@ from application.trips.models import Trip
 from application.trip_sport.models import TripSport
 from application.trip_level.models import TripLevel
 from application.trip_user.models import TripUser
-from application.trips.forms import (TripForm)
+from application.trips.forms import TripForm, SearchForm
 
 from application.sports.models import Sport
 
@@ -141,20 +141,18 @@ def trips_delete(trip_id):
 
     return redirect(url_for("trips_index"))
 
-
-@app.route("/trips/sport/<sport_id>", methods=["GET"])
-def search_by_sport(sport_id):
-
-    return render_template("trips/search.html", trips=Trip.find_trips_with_sport(sport_id))
-
-
 @app.route("/trips/<trip_id>", methods=["GET"])
 @login_required
 def trips_display(trip_id):
 
     trip = Trip.query.get(trip_id)
     reg = trip.number_of_registrations()
-    return render_template("trips/display.html", trip=trip, user_id=current_user.id, registrations=reg)
+    full = False
+
+    if reg >= trip.max_participants:
+        full = True
+
+    return render_template("trips/display.html", trip=trip, user_id=current_user.id, registrations=reg, full=full)
 
 
 @app.route("/trips/register/<trip_id>", methods=["POST"])
@@ -181,4 +179,31 @@ def trips_cancel_registration(trip_id):
     db.session().commit()
 
     return render_template("trips/display.html", trip=trip, user_id=current_user.id)
+
+@app.route("/trips/search", methods=["GET", "POST"])
+@login_required
+def trips_search():
+
+    form = SearchForm(request.form)
+
+    if request.method == "GET":
+        return render_template("trips/search.html", form=form)
+
+    if not form.validate():
+        return render_template("trips/search.html", form=form)
+
+    price = form.price.data
+    start_date = form.start_date.data
+
+    query = db.session().query(Trip)
+    if price:
+        query = query.filter(price >= Trip.price)
+    if start_date:
+        query = query.filter(start_date <= Trip.start_date)
+    query = query.order_by(Trip.start_date)
+
+    results = query.all()
+
+    return render_template("trips/list.html", trips=results)
+    
 

@@ -53,9 +53,9 @@
                 </div>
             </fieldset>
 
-            {% if current_user in trip.users %} 
-            <form class="needs-validation" method="POST" action="{{ url_for('trips_cancel_registration', trip_id=trip.id) }}"
-                novalidate>
+            {% if current_user in trip.users %}
+            <form class="needs-validation" method="POST"
+                action="{{ url_for('trips_cancel_registration', trip_id=trip.id) }}" novalidate>
                 <div class="col">
                     <legend class="border-bottom mb-2"></legend>
                     <button class="btn btn-danger" type="submit">Peru ilmoittautuminen</button>
@@ -63,16 +63,26 @@
             </form>
 
             {% elif trip.account_id != user_id %}
-            <form class="needs-validation" method="POST" action="{{ url_for('trips_register', trip_id=trip.id) }}"
-                novalidate>
+            {% if not full %}
+            <form class="needs-validation" method="POST"
+                action="{{ url_for('trips_register', trip_id=trip.id) }}" novalidate>
                 <div class="col">
                     <legend class="border-bottom mb-2"></legend>
                     <button class="btn btn-primary" type="submit">Ilmoittaudu matkalle</button>
                 </div>
             </form>
             {% else %}
-            <a class="btn btn-warning" href="{{ url_for('trips_edit', trip_id=trip.id) }}">Muokkaa</a>
-        
+            <div class="col">
+                <legend class="border-bottom mb-2"></legend>
+                <div class="alert alert-danger" role="alert">
+                    Matka on täynnä.
+                </div>
+            </div>
+            {% endif %}
+            {% else %}
+            <a class="btn btn-warning"
+                href="{{ url_for('trips_edit', trip_id=trip.id) }}">Muokkaa</a>
+
             {% endif %}
         </div>
     </div>

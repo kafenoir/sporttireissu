@@ -44,3 +44,18 @@ class TripForm(FlaskForm):
 
     class Meta:
         csrf = False
+
+class SearchForm(FlaskForm):
+
+    start_date = DateField('Lähtöpäivä', [validators.Optional()], format='%Y-%m-%d', default='')
+    price = IntegerField("Hinta (€)", [validators.NumberRange(min=0, max=100001, message='Hinnan tulee olla välillä 0 - 100 000'), validators.Optional()])
+
+    def validate_start_date(form, field):
+        if field.data is None:
+            raise ValidationError('Valitse päivämäärä')
+        earliest_date = date.today() + timedelta(days=5)
+        if field.data < earliest_date:
+            raise ValidationError('Aikaisin lähtöpäivä on ' + earliest_date.strftime('%d-%m-%Y'))
+
+    class Meta:
+        csrf = False

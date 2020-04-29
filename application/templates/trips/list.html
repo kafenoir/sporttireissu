@@ -4,11 +4,22 @@
 
 <legend>Matkat</legend>
 
+{% if trips %}
+
 <div class="list-group">
   {% for trip in trips %}
   <a href="{{ url_for('trips_display', trip_id=trip.id) }}"
-    class="list-group-item list-group-item-action"><b>{{trip.name}}</b> Kohde: {{trip.destination}}
-    Hinta: {{trip.price}} Lähtöpäivä: {{trip.start_date}} Paluupäivä: {{trip.end_date}}</a>
+    class="list-group-item list-group-item-action"><b>{{ trip.name }}</b> Kohde: {{ trip.destination }}
+    Hinta: {{ trip.price }} Lähtöpäivä: {{ trip.convertStartDate() }} Paluupäivä: {{ trip.convertEndDate() }} 
+    Viimeinen ilmoittautumispäivä: {{ trip.convertRegDL() }}</a>
   {% endfor %}
 </div>
+
+{% else %}
+
+<div class="alert alert-danger" role="alert">
+  Matkoja ei löytynyt.
+</div>
+
+{% endif %}
 {% endblock %}
