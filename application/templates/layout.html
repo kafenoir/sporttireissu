@@ -21,13 +21,13 @@
           <a class="nav-link" href="{{ url_for('trips_index') }} ">Näytä kaikki matkat</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/trips/sport/1">Näytä juoksureissut</a>
+          <a class="nav-link" href="{{ url_for('trips_mytrips') }} ">Omat matkani</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/trips/sport/2">Näytä pyöräilyreissut</a>
+          <a class="nav-link" href="{{ url_for('trips_registrations') }} ">Ilmoittautumiset</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/trips/sport/3">Näytä uintireissut</a>
+          <a class="nav-link" href="/trips/sport/3">Reissuhaku</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('trips_create') }} ">Lisää matka</a>

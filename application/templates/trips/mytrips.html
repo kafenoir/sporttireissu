@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+{% if trips is defined %}
+<div class="list-group">
+  <legend>Omat matkat</legend>
+  {% for t in trips %}
+  <a href="{{ url_for('trips_display', trip_id=t.id) }}"
+    class="list-group-item list-group-item-action"><b>{{t.name}}</b> Kohde: {{t.destination}}
+    Lähtöpäivä: {{t.start_date}} Paluupäivä: {{t.end_date}}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

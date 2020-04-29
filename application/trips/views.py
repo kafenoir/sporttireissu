@@ -2,7 +2,11 @@ from flask import redirect, render_template, request, url_for
 from flask_login import login_required, current_user
 
 from application import app, db
-from application.trips.models import Trip, trip_sport, trip_level
+from application.auth.models import User
+from application.trips.models import Trip
+from application.trip_sport.models import TripSport
+from application.trip_level.models import TripLevel
+from application.trip_user.models import TripUser
 from application.trips.forms import (TripForm)
 
 from application.sports.models import Sport
@@ -15,7 +19,19 @@ import datetime
 @app.route("/trips/", methods=["GET"])
 @login_required
 def trips_index():
-    return render_template("trips/list.html", trips=Trip.query.all(), user_id=current_user.id)
+    return render_template("trips/list.html", trips=Trip.query.all())
+
+
+@app.route("/trips/mytrips", methods=["GET"])
+@login_required
+def trips_mytrips():
+    return render_template("trips/mytrips.html", trips=Trip.find_user_trips(current_user.id))
+
+
+@app.route("/trips/registrations", methods=["GET"])
+@login_required
+def trips_registrations():
+    return render_template("trips/registrations.html", trips=Trip.find_registrations(current_user.id))
 
 
 @app.route("/trips/new", methods=["GET", "POST"])
@@ -75,11 +91,11 @@ def trips_edit(trip_id):
     form.sports.choices = [(c.id, c.name) for c in Sport.query.all()]
     form.levels.choices = [(c.id, c.name) for c in Level.query.all()]
     all_sports = Sport.query.all()
-    previous_sports = Sport.query.join(trip_sport).join(Trip).filter(
-        (trip_sport.c.sport_id == Sport.id) & (trip_sport.c.trip_id == trip_id)).all()
+    previous_sports = Sport.query.join(TripSport).join(Trip).filter(
+        (TripSport.sport_id == Sport.id) & (TripSport.trip_id == trip_id)).all()
     all_levels = Level.query.all()
-    previous_levels = Level.query.join(trip_level).join(Trip).filter(
-        (trip_level.c.level_id == Level.id) & (trip_level.c.trip_id == trip_id)).all()
+    previous_levels = Level.query.join(TripLevel).join(Trip).filter(
+        (TripLevel.level_id == Level.id) & (TripLevel.trip_id == trip_id)).all()
 
     if request.method == "GET":
         return render_template("trips/edit.html", form=form, trip=t, sports=all_sports, levels=all_levels, previous_sports=previous_sports, previous_levels=previous_levels)
@@ -113,12 +129,14 @@ def trips_edit(trip_id):
 
     return redirect(url_for("trips_index"))
 
+
 @app.route("/trips/delete/<trip_id>", methods=["POST"])
 @login_required
 def trips_delete(trip_id):
 
-    Trip.query.filter(Trip.id == trip_id).delete()
+    t = Trip.query.get(trip_id)
 
+    db.session().delete(t)
     db.session().commit()
 
     return redirect(url_for("trips_index"))
@@ -129,10 +147,15 @@ def search_by_sport(sport_id):
 
     return render_template("trips/search.html", trips=Trip.find_trips_with_sport(sport_id))
 
+
 @app.route("/trips/<trip_id>", methods=["GET"])
 @login_required
 def trips_display(trip_id):
-    return render_template("trips/display.html", trip=Trip.query.get(trip_id), user_id=current_user.id)
+
+    trip = Trip.query.get(trip_id)
+    reg = trip.number_of_registrations()
+    return render_template("trips/display.html", trip=trip, user_id=current_user.id, registrations=reg)
+
 
 @app.route("/trips/register/<trip_id>", methods=["POST"])
 @login_required
@@ -146,6 +169,7 @@ def trips_register(trip_id):
 
     return render_template("trips/display.html", trip=trip, user_id=current_user.id)
 
+
 @app.route("/trips/cancel/<trip_id>", methods=["POST"])
 @login_required
 def trips_cancel_registration(trip_id):
@@ -157,5 +181,4 @@ def trips_cancel_registration(trip_id):
     db.session().commit()
 
     return render_template("trips/display.html", trip=trip, user_id=current_user.id)
-
 

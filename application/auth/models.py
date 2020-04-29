@@ -27,3 +27,7 @@ class User(Base):
 
     def is_authenticated(self):
         return True
+
+    @staticmethod
+    def get_trips(self):
+        return self.trips

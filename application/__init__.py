@@ -19,10 +19,14 @@ from application.trips import models
 from application.trips import views
 
 from application.sports import models
+from application.trip_sport import models
+
 from application.levels import models
+from application.trip_level import models
 
 from application.auth import models
 from application.auth import views
+from application.trip_user import models
 
 from application.auth.models import User
 from os import urandom
