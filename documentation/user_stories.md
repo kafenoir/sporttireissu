@@ -14,7 +14,7 @@ Käyttäjä haluaa hakea matkoja joiden maksimihinta = x
 
 ```
 SELECT * FROM trip
-WHERE trip.price <= ?
+WHERE trip.price <= x
 SORT BY trip.start_date
 ```
 
