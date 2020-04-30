@@ -23,6 +23,8 @@ Ohjelman avulla voi järjestää ja osallistua urheilumatkoille. Käyttäjä voi
 
 [Tietokannan rakenne](https://github.com/kafenoir/sporttireissu/blob/master/documentation/database_structure.md)
 
+[Toteuttamatta jääneet toiminnot](https://github.com/kafenoir/sporttireissu/blob/master/documentation/puuttuvat.md)
+
 ## Heroku
 
 https://sporttireissu.herokuapp.com/
