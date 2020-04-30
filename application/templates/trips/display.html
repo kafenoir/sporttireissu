@@ -5,7 +5,18 @@
     <div class="row">
         <div class="col">
             <fieldset>
-                <legend class="border-bottom mb-2">{{ trip.name }}</legend>
+                <div class="row">
+                    <div class="col-md-auto">
+                        <legend>{{ trip.name }}</legend>
+                    </div>
+                    <div class="col-md-auto">
+                        {% if trip.account_id == user_id %}
+                        <a class="btn btn-warning"
+                            href="{{ url_for('trips_edit', trip_id=trip.id) }}">Muokkaa</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="border-bottom mb-2"></div>
                 <div class="row mb-2">
                     <div class="col-lg-3">
                         Kohde: {{ trip.destination }}
@@ -80,11 +91,19 @@
             </div>
             {% endif %}
             {% else %}
-            <a class="btn btn-warning"
-                href="{{ url_for('trips_edit', trip_id=trip.id) }}">Muokkaa</a>
-
-            {% endif %}
+            <legend class="border-bottom mb-2">Ilmoittautuneet</legend>
+            <div class="row">
+                <div class="col-md-auto">
+                    <div class="list-group">
+                        {% for u in trip.users %}
+                        <div class="list-group-item list-group-item-action">
+                            <b>Käyttäjä:</b> {{ u.username }} <b>Email:</b> {{u.email}}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}

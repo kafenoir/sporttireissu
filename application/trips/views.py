@@ -203,17 +203,22 @@ def trips_search():
     level = form.level.data
 
     query = db.session().query(Trip)
-    if level:
-        query = query.join(TripLevel).join(Level).filter(TripLevel.level_id == level)
+    
     if price:
         query = query.filter(price >= Trip.price)
     if start_date:
         query = query.filter(start_date <= Trip.start_date)
+    if level:
+        query = query.join(TripLevel).join(Level).filter(TripLevel.level_id == level)
     if sports:
-        query = query.join(
-        TripSport).join(Sport).filter(Sport.id.in_(sports))
-    
+        searched_sports = []
+        for s in sports:
+            sport = Sport.query.get(s)
+            searched_sports.append(sport)
+        query = query.filter(*[Trip.sports.contains(s) for s in searched_sports])
 
+    query = query.order_by(Trip.start_date)
+    
     results = query.all()
 
     return render_template("trips/list.html", trips=results, sports=sports)

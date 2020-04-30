@@ -9,9 +9,9 @@
 <div class="list-group">
   {% for trip in trips %}
   <a href="{{ url_for('trips_display', trip_id=trip.id) }}"
-    class="list-group-item list-group-item-action"><b>{{ trip.name }}</b> Kohde: {{ trip.destination }}
-    Hinta: {{ trip.price }} Lähtöpäivä: {{ trip.convertStartDate() }} Paluupäivä: {{ trip.convertEndDate() }} 
-    Viimeinen ilmoittautumispäivä: {{ trip.convertRegDL() }}</a>
+    class="list-group-item list-group-item-action"><b>Matkan nimi:</b> {{ trip.name }} <b>Kohde:</b> {{ trip.destination }}
+    <b>Hinta:</b> {{ trip.price }} <b>Lähtöpäivä:</b> {{ trip.convertStartDate() }} <b>Paluupäivä:</b> {{ trip.convertEndDate() }} 
+    <b>Viimeinen ilmoittautumispäivä:</b> {{ trip.convertRegDL() }}</a>
   {% endfor %}
 </div>
 
