@@ -4,7 +4,7 @@ Sovelluksen saa ladattua pakattuna osoitteesta:
 
 https://github.com/kafenoir/sporttireissu/archive/master.zip
 
-Pura pakattu sovellus ja mene terminaalilla sen juurikansioon 'sporttireissu-master'.
+Pura pakattu sovellus ja mene terminaalilla sen juurikansioon `sporttireissu-master`.
 
 ## Asennus paikallisesti
 
