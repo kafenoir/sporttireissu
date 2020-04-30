@@ -33,13 +33,13 @@ class Trip(Base):
         self.max_participants = 10
 
     def convertStartDate(self):
-        return self.start_date.strftime("%d-%m-%Y")
+        return self.start_date.strftime("%Y-%m-%d")
 
     def convertEndDate(self):
-        return self.end_date.strftime("%d-%m-%Y")
+        return self.end_date.strftime("%Y-%m-%d")
 
     def convertRegDL(self):
-        return self.registration_dl.strftime("%d-%m-%Y")
+        return self.registration_dl.strftime("%Y-%m-%d")
 
     def number_of_registrations(self):
 
