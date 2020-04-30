@@ -1,8 +1,10 @@
-#Tietokannan rakenne
+# Tietokannan rakenne
 
-##Tietokantakaavio
+## Tietokantakaavio
 
-##Taulujen luonti
+![Tietokantakaavio](https://github.com/kafenoir/sporttireissu/blob/master/documentation/images/sporttireissu_tkk.png)
+
+## Taulujen luonti
 
 ```
 CREATE TABLE account (
