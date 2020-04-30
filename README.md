@@ -8,17 +8,20 @@ Ohjelman avulla voi järjestää ja osallistua urheilumatkoille. Käyttäjä voi
 
 * Rekisteröityminen
 * Kirjautuminen
-* Matkan luominen ja peruutus 
+* Matkan luominen, muokkaaminen ja peruutus 
 * Matkalle ilmoittautuminen ja ilmoittautumisen peruminen
-* Matkatarjonnan katselu eri rajauksilla
 * Ilmoittautuneiden luettelo matkan järjestäjälle
+* Haut matkatarjonnasta erilaisilla rajauksilla
 
 ## Dokumentaatio
 
 [Asennusohje](https://github.com/kafenoir/sporttireissu/blob/master/documentation/asennusohje.md)
+
 [Käyttöohje](https://github.com/kafenoir/sporttireissu/blob/master/documentation/manual.md)
-![Tietokantakaavio](https://github.com/kafenoir/sporttireissu/blob/master/documentation/images/sporttireissu_tkk.png)
+
 [Käyttötapaukset](https://github.com/kafenoir/sporttireissu/blob/master/documentation/user_stories.md)
+
+[Tietokannan rakenne](https://github.com/kafenoir/sporttireissu/blob/master/documentation/database_structure.md)
 
 ## Heroku
 
