@@ -56,21 +56,6 @@ class Trip(Base):
         return response
 
     @staticmethod
-    def find_trips_with_sport(s):
-        stmt = text("SELECT Trip.id, Trip.name FROM Trip"
-                    " LEFT JOIN Trip_Sport ON Trip_Sport.trip_id = Trip.id"
-                    " LEFT JOIN Sport ON Sport.id = Trip_Sport.sport_id"
-                    " WHERE Sport.id = " + s)
-
-        res = db.engine.execute(stmt)
-
-        response = []
-        for row in res:
-            response.append({"id": row[0], "name": row[1]})
-
-        return response
-
-    @staticmethod
     def find_user_trips(user_id):
         stmt = text(
             "SELECT Trip.id, Trip.name, Trip.destination, Trip.start_date, Trip.end_date FROM Trip"
@@ -84,7 +69,7 @@ class Trip(Base):
         sep = ' '
         for row in res:
             response.append(
-                {"id": row[0], "name": row[1], "destination": row[2], "start_date": row[3].split(sep, 1)[0], "end_date": row[4].split(sep, 1)[0]})
+                {"id": row[0], "name": row[1], "destination": row[2], "start_date": str(row[3]).split(sep, 1)[0], "end_date": str(row[4]).split(sep, 1)[0]})
 
         return response
 
@@ -103,8 +88,7 @@ class Trip(Base):
         response = []
         sep = ' '
         for row in res:
-                response.append(
-                    {"id": row[0], "name": row[1], "destination": row[2], "start_date": row[3].split(sep, 1)[0], "end_date": row[4].split(sep, 1)[0]})
+            response.append(
+                {"id": row[0], "name": row[1], "destination": row[2], "start_date": str(row[3]).split(sep, 1)[0], "end_date": str(row[4]).split(sep, 1)[0]})
 
         return response
-    
