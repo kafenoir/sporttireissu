@@ -8,6 +8,7 @@ from application.trip_sport.models import TripSport
 from application.trip_level.models import TripLevel
 from application.trip_user.models import TripUser
 from application.trips.forms import TripForm, SearchForm
+from sqlalchemy import func
 
 from application.sports.models import Sport
 
@@ -141,6 +142,7 @@ def trips_delete(trip_id):
 
     return redirect(url_for("trips_index"))
 
+
 @app.route("/trips/<trip_id>", methods=["GET"])
 @login_required
 def trips_display(trip_id):
@@ -180,11 +182,14 @@ def trips_cancel_registration(trip_id):
 
     return render_template("trips/display.html", trip=trip, user_id=current_user.id)
 
+
 @app.route("/trips/search", methods=["GET", "POST"])
 @login_required
 def trips_search():
 
     form = SearchForm(request.form)
+    form.sports.choices = [(c.id, c.name) for c in Sport.query.all()]
+    form.level.choices = [(c.id, c.name) for c in Level.query.all()]
 
     if request.method == "GET":
         return render_template("trips/search.html", form=form)
@@ -194,16 +199,21 @@ def trips_search():
 
     price = form.price.data
     start_date = form.start_date.data
+    sports = form.sports.data
+    level = form.level.data
 
     query = db.session().query(Trip)
+    if level:
+        query = query.join(TripLevel).join(Level).filter(TripLevel.level_id == level)
     if price:
         query = query.filter(price >= Trip.price)
     if start_date:
         query = query.filter(start_date <= Trip.start_date)
-    query = query.order_by(Trip.start_date)
+    if sports:
+        query = query.join(
+        TripSport).join(Sport).filter(Sport.id.in_(sports))
+    
 
     results = query.all()
 
-    return render_template("trips/list.html", trips=results)
-    
-
+    return render_template("trips/list.html", trips=results, sports=sports)

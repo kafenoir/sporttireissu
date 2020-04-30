@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SelectMultipleField, validators, widgets
+from wtforms import StringField, IntegerField, SelectMultipleField, SelectField, validators, widgets
 from wtforms.fields.html5 import DateField
 from wtforms.validators import ValidationError
 from datetime import datetime
@@ -49,6 +49,8 @@ class SearchForm(FlaskForm):
 
     start_date = DateField('Lähtöpäivä', [validators.Optional()], format='%Y-%m-%d', default='')
     price = IntegerField("Hinta (€)", [validators.NumberRange(min=0, max=100001, message='Hinnan tulee olla välillä 0 - 100 000'), validators.Optional()])
+    sports = MultiCheckBoxField('Urheilulajit', [validators.Optional()], choices=[], coerce=int)
+    level = SelectField('Taitotaso', [validators.Optional()], choices=[], coerce=int)
 
     def validate_start_date(form, field):
         if field.data is None:
