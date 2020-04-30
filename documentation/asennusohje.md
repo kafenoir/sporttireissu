@@ -8,15 +8,15 @@ Pura pakattu sovellus ja mene terminaalilla sen juurikansioon `sporttireissu-mas
 
 ## Asennus paikallisesti
 
-Luo hakemistoon Python-virtuaaliympäristö komennolla `python3 -m venv venv`
+Luo hakemistoon Python-virtuaaliympäristö komennolla `python3 -m venv venv`.
 
-Aktivoi virtuaaliympäristö komennolla `source venv/bin/activate`
+Aktivoi virtuaaliympäristö komennolla `source venv/bin/activate`.
 
-Asenna sovelluksen riippuvuudet komennolla `pip install -r requirements.txt`
+Asenna sovelluksen riippuvuudet komennolla `pip install -r requirements.txt`.
 
 ### Urheilulajien ja taitotasojen lisääminen
 
-Avaa yhteys sovelluksen käyttämään tietokantaan komennolla sqlite3 `application/trips.db`
+Avaa yhteys sovelluksen käyttämään tietokantaan komennolla sqlite3 `application/trips.db`.
 
 Urheilulajien lisääminen tapahtuu komennolla:
 
@@ -30,13 +30,13 @@ Taitotasojen
 
 ESIM: `INSERT INTO level(name) VALUES(Aloittelija)`
 
-Kun olet valmis, voit sulkea yhteyden tietokantaan komennolla `.exit`
+Kun olet valmis, voit sulkea yhteyden tietokantaan komennolla `.exit`.
 
 ### Sovelluksen käynnistäminen
 
-Käynnistä sovellus komennolla `python run.py`
+Käynnistä sovellus komennolla `python run.py`.
 
-Mene selaimella osoitteeseen `http://localhost:5000/`
+Mene selaimella osoitteeseen `http://localhost:5000/`.
 
 
 
